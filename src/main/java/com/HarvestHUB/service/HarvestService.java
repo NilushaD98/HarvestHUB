@@ -2,6 +2,7 @@ package com.HarvestHUB.service;
 
 import com.HarvestHUB.collection.Harvest;
 import com.HarvestHUB.dto.request.AddHarvestDTO;
+import com.HarvestHUB.dto.request.SearchHarvestDTO;
 import com.HarvestHUB.dto.request.UpdateHarvestStatusDTO;
 import com.HarvestHUB.dto.response.AllHarvestsDTO;
 import com.HarvestHUB.dto.response.HarvestDTO;
@@ -20,4 +21,8 @@ public interface HarvestService {
     Boolean updateHarvestStatus(UpdateHarvestStatusDTO updateHarvestStatusDTO);
 
     List<AllHarvestsDTO> getAllHarvest();
+
+    List<AllHarvestsDTO> searchHarvests(SearchHarvestDTO searchHarvestDTO);
+
+    Harvest getHarvestByID(String harvestID);
 }

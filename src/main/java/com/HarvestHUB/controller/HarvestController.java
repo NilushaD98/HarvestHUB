@@ -1,6 +1,7 @@
 package com.HarvestHUB.controller;
 
 import com.HarvestHUB.dto.request.AddHarvestDTO;
+import com.HarvestHUB.dto.request.SearchHarvestDTO;
 import com.HarvestHUB.dto.request.UpdateHarvestStatusDTO;
 import com.HarvestHUB.dto.response.HarvestDTO;
 import com.HarvestHUB.service.HarvestService;
@@ -52,6 +53,18 @@ public class HarvestController {
     public ResponseEntity<StandardResponse> getAllHarvest(){
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(200,"",harvestService.getAllHarvest()),HttpStatus.OK
+        );
+    }
+    @GetMapping("searchHarvests")
+    public ResponseEntity<StandardResponse> searchHarvests(@RequestBody SearchHarvestDTO searchHarvestDTO) {
+        return new ResponseEntity<StandardResponse>(
+               new StandardResponse(200,"",harvestService.searchHarvests(searchHarvestDTO)),HttpStatus.OK
+        );
+    }
+    @GetMapping("getHarvestByID")
+        public ResponseEntity<StandardResponse> getHarvestByID(@RequestParam("harvestID")String harvestID){
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"",harvestService.getHarvestByID(harvestID)),HttpStatus.OK
         );
     }
 }

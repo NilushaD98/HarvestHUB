@@ -3,6 +3,7 @@ package com.HarvestHUB.service.IMPL;
 import com.HarvestHUB.collection.Harvest;
 import com.HarvestHUB.collection.User;
 import com.HarvestHUB.dto.request.AddHarvestDTO;
+import com.HarvestHUB.dto.request.SearchHarvestDTO;
 import com.HarvestHUB.dto.request.UpdateHarvestStatusDTO;
 import com.HarvestHUB.dto.response.AllHarvestsDTO;
 import com.HarvestHUB.dto.response.HarvestDTO;
@@ -156,5 +157,40 @@ public class HarvestServiceIMPL implements HarvestService {
                 }
         );
         return allHarvestsDTOS;
+    }
+
+    @Override
+    public List<AllHarvestsDTO> searchHarvests(SearchHarvestDTO searchHarvestDTO) {
+        List<AllHarvestsDTO> allHarvestsDTOS = new ArrayList<>();
+        List<Harvest> harvests = harvestRepository.searchHarvests(searchHarvestDTO.getType(), searchHarvestDTO.getLocation(), searchHarvestDTO.getMinPrice(), searchHarvestDTO.getMaxPrice(),searchHarvestDTO.getAvailableStatus());
+        harvests.forEach(
+                (harvest)->{
+                    User user = userRepository.findById(harvest.getFarmerId()).get();
+                    AllHarvestsDTO allHarvestsDTO= new AllHarvestsDTO(
+                            harvest.getHarvestId(),
+                            user.getId(),
+                            user.getEmail(),
+                            user.getName(),
+                            user.getAddress(),
+                            user.getContact(),
+                            user.getProfilePicture(),
+                            harvest.getType(),
+                            harvest.getMeasuringUnits(),
+                            harvest.getQuantity(),
+                            harvest.getPrice(),
+                            harvest.getAvailability(),
+                            harvest.getLocation(),
+                            harvest.getDescription(),
+                            formatToLocalTime(harvest.getCreatedAt())
+                    );
+                    allHarvestsDTOS.add(allHarvestsDTO);
+                }
+        );
+        return allHarvestsDTOS;
+    }
+
+    @Override
+    public Harvest getHarvestByID(String harvestID) {
+        return harvestRepository.findById(harvestID).get();
     }
 }
