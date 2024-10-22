@@ -6,6 +6,7 @@ import com.HarvestHUB.dto.request.SearchHarvestDTO;
 import com.HarvestHUB.dto.request.UpdateHarvestStatusDTO;
 import com.HarvestHUB.dto.response.AllHarvestsDTO;
 import com.HarvestHUB.dto.response.HarvestDTO;
+import com.HarvestHUB.dto.response.OrderDTO;
 
 import java.util.List;
 
@@ -25,4 +26,8 @@ public interface HarvestService {
     List<AllHarvestsDTO> searchHarvests(SearchHarvestDTO searchHarvestDTO);
 
     Harvest getHarvestByID(String harvestID);
+
+    List<OrderDTO> farmersOrders(String farmerID);
+
+    Boolean updateShippedStatus(String orderID);
 }

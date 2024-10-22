@@ -20,6 +20,7 @@ public class Order {
     private String description;
     private String orderLocation;
     private Boolean deliverStatus;
+    private Boolean shippingStatus;
     private double price;
     private int rate;
     private String rateMessage;

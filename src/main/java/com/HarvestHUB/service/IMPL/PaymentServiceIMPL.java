@@ -122,6 +122,7 @@ public class PaymentServiceIMPL implements PaymentService {
                             "",
                             paymentIntent.getId()
                     );
+                    order1.setShippingStatus(false);
                     orderRepository.save(order1);
                     byId.get().setAvailability(AvailableStatus.SOLD);
                     harvestRepository.save(byId.get());

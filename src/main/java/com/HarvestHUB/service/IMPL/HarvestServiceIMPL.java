@@ -1,17 +1,21 @@
 package com.HarvestHUB.service.IMPL;
 
 import com.HarvestHUB.collection.Harvest;
+import com.HarvestHUB.collection.Order;
 import com.HarvestHUB.collection.User;
 import com.HarvestHUB.dto.request.AddHarvestDTO;
 import com.HarvestHUB.dto.request.SearchHarvestDTO;
 import com.HarvestHUB.dto.request.UpdateHarvestStatusDTO;
 import com.HarvestHUB.dto.response.AllHarvestsDTO;
 import com.HarvestHUB.dto.response.HarvestDTO;
+import com.HarvestHUB.dto.response.OrderDTO;
 import com.HarvestHUB.enums.AvailableStatus;
 import com.HarvestHUB.enums.MeasuringUnits;
 import com.HarvestHUB.repo.HarvestRepository;
+import com.HarvestHUB.repo.OrderRepository;
 import com.HarvestHUB.repo.UserRepository;
 import com.HarvestHUB.service.HarvestService;
+import com.HarvestHUB.util.mappers.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,6 +37,8 @@ public class HarvestServiceIMPL implements HarvestService {
 
     private final HarvestRepository harvestRepository;
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
+    private final OrderMapper orderMapper;
 
     private Date getCurrentDateInUTC() {
         LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("UTC"));
@@ -58,6 +64,7 @@ public class HarvestServiceIMPL implements HarvestService {
                     addHarvestDTO.getDescription(),
                     getCurrentDateInUTC()
             );
+            harvest.setImageURL(addHarvestDTO.getImageURL());
             harvestRepository.save(harvest);
             return true;
         }catch (Exception e){
@@ -82,6 +89,7 @@ public class HarvestServiceIMPL implements HarvestService {
                     harvestDTO.setAvailability(harvest.getAvailability());
                     harvestDTO.setLocation(harvest.getLocation());
                     harvestDTO.setDescription(harvest.getDescription());
+                    harvestDTO.setImageURL(harvest.getImageURL());
                     harvestDTO.setCreatedAt(formatToLocalTime(harvest.getCreatedAt()));
                     harvestDTOS.add(harvestDTO);
                 }
@@ -151,6 +159,7 @@ public class HarvestServiceIMPL implements HarvestService {
                             harvest.getAvailability(),
                             harvest.getLocation(),
                             harvest.getDescription(),
+                            harvest.getImageURL(),
                             formatToLocalTime(harvest.getCreatedAt())
                     );
                     allHarvestsDTOS.add(allHarvestsDTO);
@@ -181,6 +190,7 @@ public class HarvestServiceIMPL implements HarvestService {
                             harvest.getAvailability(),
                             harvest.getLocation(),
                             harvest.getDescription(),
+                            harvest.getImageURL(),
                             formatToLocalTime(harvest.getCreatedAt())
                     );
                     allHarvestsDTOS.add(allHarvestsDTO);
@@ -192,5 +202,19 @@ public class HarvestServiceIMPL implements HarvestService {
     @Override
     public Harvest getHarvestByID(String harvestID) {
         return harvestRepository.findById(harvestID).get();
+    }
+
+    @Override
+    public List<OrderDTO> farmersOrders(String farmerID) {
+        List<Order> orderList = orderRepository.findByFarmerIDEquals(farmerID);
+        return orderMapper.EntityListTODTOList(orderList);
+    }
+
+    @Override
+    public Boolean updateShippedStatus(String orderID) {
+        Optional<Order> byId = orderRepository.findById(orderID);
+        byId.get().setShippingStatus(true);
+        orderRepository.save(byId.get());
+        return true;
     }
 }

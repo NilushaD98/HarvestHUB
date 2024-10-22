@@ -19,5 +19,7 @@ public class AddHarvestDTO {
     private AvailableStatus availability;
     private String location;
     private String description;
+    private String imageURL;
+
 
 }

@@ -12,4 +12,5 @@ public interface OrderRepository extends MongoRepository<Order,String> {
     Optional<Order> findByHarvestIDEquals(String harvestID);
 
     List<Order> findByWholeSellerIDEquals(String wholeSellerID);
+    List<Order> findByFarmerIDEquals(String farmerID);
 }

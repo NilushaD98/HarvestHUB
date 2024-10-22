@@ -25,5 +25,6 @@ public class AllHarvestsDTO {
     private AvailableStatus availability;
     private String location;
     private String description;
+    private String imageURL;
     private String createdAt;
 }

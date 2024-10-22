@@ -26,6 +26,7 @@ public class Harvest {
     private String location;
     private String description;
     private Date createdAt;
+    private String imageURL;
 
     public Harvest(String farmerId, String type, MeasuringUnits measuringUnits, double quantity, double price, AvailableStatus availability, String location, String description, Date createdAt) {
         this.farmerId = farmerId;

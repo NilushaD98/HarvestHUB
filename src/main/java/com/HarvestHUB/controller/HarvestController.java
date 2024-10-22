@@ -62,9 +62,21 @@ public class HarvestController {
         );
     }
     @GetMapping("getHarvestByID")
-        public ResponseEntity<StandardResponse> getHarvestByID(@RequestParam("harvestID")String harvestID){
+    public ResponseEntity<StandardResponse> getHarvestByID(@RequestParam("harvestID")String harvestID){
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(200,"",harvestService.getHarvestByID(harvestID)),HttpStatus.OK
+        );
+    }
+    @GetMapping("farmersOrders")
+    public ResponseEntity<StandardResponse> farmersOrders(@RequestParam("farmerID")String farmerID){
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"",harvestService.farmersOrders(farmerID)),HttpStatus.OK
+        );
+    }
+    @PutMapping("updateShippedStatus")
+    public ResponseEntity<StandardResponse> updateShippedStatus(@RequestParam("orderID")String orderID){
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"Shipped Status Updated",harvestService.updateShippedStatus(orderID)),HttpStatus.OK
         );
     }
 }
