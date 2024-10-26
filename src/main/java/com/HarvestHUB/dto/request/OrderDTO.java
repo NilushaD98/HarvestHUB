@@ -15,11 +15,8 @@ public class OrderDTO {
     private String wholeSellerID;
     private String description;
     private String orderLocation;
-    private Boolean deliverStatus;
     private Boolean shippingStatus;
     private double price;
-    private int rate;
-    private String rateMessage;
     private long cardNumber;
     private int expYear;
     private int expMonth;
