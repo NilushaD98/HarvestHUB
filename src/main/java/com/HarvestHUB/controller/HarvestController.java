@@ -55,7 +55,7 @@ public class HarvestController {
                 new StandardResponse(200,"",harvestService.getAllHarvest()),HttpStatus.OK
         );
     }
-    @GetMapping("searchHarvests")
+    @PostMapping("searchHarvests")
     public ResponseEntity<StandardResponse> searchHarvests(@RequestBody SearchHarvestDTO searchHarvestDTO) {
         return new ResponseEntity<StandardResponse>(
                new StandardResponse(200,"",harvestService.searchHarvests(searchHarvestDTO)),HttpStatus.OK
